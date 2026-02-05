@@ -11,7 +11,6 @@
   <meta property="og:description" content="Coupe • Couleur • Balayage • Soins. Prenez rendez-vous." />
   <meta property="og:type" content="website" />
 
-  <!-- Basic styling (single-file) -->
   <style>
     :root{
       --bg:#0b0f14;
@@ -126,6 +125,7 @@
       color:var(--text);
       font-weight:600;
       min-width:180px;
+      cursor:pointer;
     }
     .btn:hover{background:rgba(255,255,255,.07)}
     .btn.primary{
@@ -187,6 +187,37 @@
     .list{margin:0; padding-left:18px; color:var(--muted); font-size:13px}
     .list li{margin:6px 0}
 
+    /* Galerie */
+    .galleryGrid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:14px;
+    }
+    .galleryItem{
+      position:relative;
+      border-radius: 18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      aspect-ratio: 4 / 3;
+    }
+    .galleryItem img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transition: transform .35s ease, filter .35s ease;
+      filter: saturate(1.05) contrast(1.02);
+    }
+    .galleryItem:hover img{
+      transform: scale(1.06);
+      filter: saturate(1.12) contrast(1.05);
+    }
+    .g1{grid-column: span 7;}
+    .g2{grid-column: span 5;}
+    .g3{grid-column: span 5;}
+    .g4{grid-column: span 7;}
+
     /* Contact */
     .contactGrid{
       display:grid; grid-template-columns: 1fr 1fr; gap:14px; align-items:stretch;
@@ -232,34 +263,12 @@
       .pricing{grid-template-columns: 1fr}
       .contactGrid{grid-template-columns: 1fr}
       nav{display:none}
-    }
-  /* Galerie */
-.galleryGrid{
-  display:grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap:14px;
-}
-.galleryItem{
-  position:relative;
-  border-radius: 18px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,.10);
-}
-.galleryItem img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-  transition: transform .4s ease;
-}
-.galleryItem:hover img{
-  transform: scale(1.08);
-}
 
-  .galleryGrid{grid-template-columns: 1fr;}
-  .g1,.g2,.g3,.g4{grid-column:auto; min-height:240px;}
-}
-</style>
+      .galleryGrid{grid-template-columns: 1fr;}
+      .g1,.g2,.g3,.g4{grid-column:auto;}
+      .galleryItem{aspect-ratio: 16 / 10;}
+    }
+  </style>
 
   <!-- Local Business structured data (edit values) -->
   <script type="application/ld+json">
@@ -285,7 +294,6 @@
 </head>
 
 <body>
-  <!-- Top bar -->
   <header class="topbar">
     <div class="wrap inner">
       <a class="brand" href="#haut" aria-label="Retour en haut">
@@ -298,19 +306,17 @@
 
       <nav aria-label="Navigation">
         <a href="#services">Services</a>
+        <a href="#galerie">Galerie</a>
         <a href="#tarifs">Tarifs</a>
         <a href="#avis">Avis</a>
         <a href="#contact">Contact</a>
       </nav>
 
-      <a class="cta" href="tel:+33100000000" aria-label="Appeler le salon">
-        📞 Appeler
-      </a>
+      <a class="cta" href="tel:+33100000000" aria-label="Appeler le salon">📞 Appeler</a>
     </div>
   </header>
 
   <main id="haut">
-    <!-- Hero -->
     <section class="hero">
       <div class="wrap grid">
         <div>
@@ -322,7 +328,6 @@
           </p>
 
           <div class="heroActions">
-            <!-- Replace with your booking link (Planity / Treatwell / Calendly etc.) -->
             <a class="btn primary" href="#contact">Prendre rendez-vous</a>
             <a class="btn" href="https://www.google.com/search?q=Salon+Elegance+Paris+avis" target="_blank" rel="noopener">Voir les avis Google</a>
           </div>
@@ -333,28 +338,15 @@
         <aside class="panel" aria-label="Informations rapides">
           <h3>Infos rapides</h3>
           <div class="kv">
-            <div class="row">
-              <b>Temps moyen</b>
-              <span>Coupe 30–45 min</span>
-            </div>
-            <div class="row">
-              <b>Spécialités</b>
-              <span>Balayage, Brushing</span>
-            </div>
-            <div class="row">
-              <b>Pour qui ?</b>
-              <span>Femmes • Hommes • Enfants</span>
-            </div>
-            <div class="row">
-              <b>Paiement</b>
-              <span>CB • Espèces</span>
-            </div>
+            <div class="row"><b>Temps moyen</b><span>Coupe 30–45 min</span></div>
+            <div class="row"><b>Spécialités</b><span>Balayage, Brushing</span></div>
+            <div class="row"><b>Pour qui ?</b><span>Femmes • Hommes • Enfants</span></div>
+            <div class="row"><b>Paiement</b><span>CB • Espèces</span></div>
           </div>
         </aside>
       </div>
     </section>
 
-    <!-- Services -->
     <section id="services">
       <div class="wrap">
         <div class="sectionTitle">
@@ -377,36 +369,40 @@
           </div>
         </div>
       </div>
-    </section><!-- Galerie -->
-<section id="galerie">
-  <div class="wrap">
-    <div class="sectionTitle">
-      <h2>Galerie</h2>
-      <p>Un aperçu de notre salon & de nos réalisations.</p>
-    </div>
+    </section>
 
-    <div class="galleryGrid">
-      <figure class="galleryItem g1">
-        <img src="galerie-1.jpg" alt="Intérieur du salon">
-      </figure>
+    <!-- Galerie (images via links) -->
+    <section id="galerie">
+      <div class="wrap">
+        <div class="sectionTitle">
+          <h2>Galerie</h2>
+          <p>Un aperçu de notre salon & de nos réalisations.</p>
+        </div>
 
-      <figure class="galleryItem g2">
-        <img src="galerie-2.jpg" alt="Coiffure & brushing">
-      </figure>
+        <div class="galleryGrid">
+          <figure class="galleryItem g1">
+            <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=2000&q=85&dpr=2" alt="Intérieur du salon" loading="lazy">
+          </figure>
 
-      <figure class="galleryItem g3">
-        <img src="galerie-3.jpg" alt="Coloration & gloss">
-      </figure>
+          <figure class="galleryItem g2">
+            <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=2000&q=85&dpr=2" alt="Coiffure & brushing" loading="lazy">
+          </figure>
 
-      <figure class="galleryItem g4">
-        <img src="galerie-4.jpg" alt="Balayage signature">
-      </figure>
-    </div>
-  </div>
-</section>
+          <figure class="galleryItem g3">
+            <img src="https://images.unsplash.com/photo-1595475038784-bbe439ff41e6?auto=format&fit=crop&w=2000&q=85&dpr=2" alt="Coloration & gloss" loading="lazy">
+          </figure>
 
+          <figure class="galleryItem g4">
+            <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=2000&q=85&dpr=2" alt="Balayage signature" loading="lazy">
+          </figure>
+        </div>
 
-    <!-- Pricing -->
+        <p class="help" style="margin-top:12px">
+          Astuce : 4 à 8 photos réelles augmentent fortement la confiance et les prises de rendez-vous.
+        </p>
+      </div>
+    </section>
+
     <section id="tarifs">
       <div class="wrap">
         <div class="sectionTitle">
@@ -453,7 +449,6 @@
       </div>
     </section>
 
-    <!-- Reviews -->
     <section id="avis">
       <div class="wrap">
         <div class="sectionTitle">
@@ -478,7 +473,6 @@
       </div>
     </section>
 
-    <!-- Contact -->
     <section id="contact">
       <div class="wrap">
         <div class="sectionTitle">
@@ -490,7 +484,6 @@
           <div class="panel">
             <h3>Demande de rendez-vous</h3>
 
-            <!-- Simple mailto form (works without backend). Replace email. -->
             <form id="contactForm">
               <label for="name">Nom</label>
               <input id="name" name="name" autocomplete="name" placeholder="Votre nom" required />
@@ -514,7 +507,6 @@
           </div>
 
           <div class="mapBox" aria-label="Carte Google">
-            <!-- Replace the src with the business embed map (Google Maps > Share > Embed a map) -->
             <iframe
               title="Carte du salon"
               loading="lazy"
@@ -532,6 +524,7 @@
       <div>© <span id="year"></span> Salon Élégance — Tous droits réservés</div>
       <div style="display:flex; gap:12px; flex-wrap:wrap">
         <a href="#services">Services</a>
+        <a href="#galerie">Galerie</a>
         <a href="#tarifs">Tarifs</a>
         <a href="#contact">Contact</a>
       </div>
@@ -539,10 +532,8 @@
   </footer>
 
   <script>
-    // Update year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Mailto submit (no backend)
     document.getElementById("contactForm").addEventListener("submit", function(e){
       e.preventDefault();
       const name = document.getElementById("name").value.trim();
@@ -555,13 +546,9 @@
         `Nom: ${name}\nTéléphone: ${phone}\nPrestation: ${service}\n\nMessage:\n${message}\n`
       );
 
-      // TODO: Replace with the salon email
       const to = "contact@salon-elegance.fr";
       window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
     });
   </script>
 </body>
 </html>
-
-
-
